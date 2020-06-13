@@ -5,5 +5,8 @@ if (gradle.parent == null) {
 }
 
 include(
-        ":dagger"
+        ":dagger",
+        ":dagger:core"
 )
+
+project(":dagger:core").name = "dagger-core"
