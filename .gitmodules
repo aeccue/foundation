@@ -1,0 +1,3 @@
+[submodule "buildscript"]
+	path = buildscript
+	url = git@github.com:aeccue/gradle.git
