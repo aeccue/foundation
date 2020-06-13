@@ -17,3 +17,7 @@ subprojects {
     group = "${rootProject.group}.foundation"
     version = rootProject.version
 }
+
+dependencies {
+    "api"(project(":dagger"))
+}
