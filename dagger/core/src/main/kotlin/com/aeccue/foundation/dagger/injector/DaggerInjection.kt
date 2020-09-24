@@ -14,9 +14,7 @@ object DaggerInjection {
 
     fun inject(target: Any) {
         for (injector in injectors) {
-            if (injector.inject(target)) {
-                return
-            }
+            if (injector.inject(target)) return
         }
 
         throw IllegalArgumentException("Dagger injector does not exist for target [${target::class.simpleName}]")
