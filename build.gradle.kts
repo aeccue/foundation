@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.aeccue:gradle:0.1.1")
+        classpath("com.aeccue:gradle:0.1.2")
     }
 }
 
@@ -16,8 +16,4 @@ apply(plugin = com.aeccue.gradle.Plugins.Aeccue.PROJECT_KOTLIN)
 subprojects {
     group = "${rootProject.group}.foundation"
     version = rootProject.version
-}
-
-dependencies {
-    "api"(project(":dagger"))
 }
