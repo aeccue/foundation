@@ -1,9 +1,12 @@
 rootProject.name = "foundation"
 
 if (gradle.parent == null) {
-    includeBuild("buildscript")
+    includeBuild("../gradle")
 }
 
 include(
-        ":dagger"
+        "dagger",
+        "dagger:core"
 )
+
+project(":dagger:core").name = "dagger-core"
