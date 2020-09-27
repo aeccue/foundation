@@ -2,6 +2,7 @@ package com.aeccue.foundation.test
 
 import org.json.simple.JSONObject
 
+const val TEST_CASES = "testCases"
 const val TEST_STRING = "Hello World!"
 const val TEST_STRING_BASE64_ENCODED = "SGVsbG8gV29ybGQh"
 
