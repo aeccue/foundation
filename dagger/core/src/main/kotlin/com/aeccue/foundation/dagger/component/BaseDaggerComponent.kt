@@ -4,9 +4,9 @@ import com.aeccue.foundation.dagger.injector.DaggerInjection
 import com.aeccue.foundation.dagger.injector.DaggerInjectorProvider
 import com.aeccue.foundation.dagger.injector.Injectable
 
-abstract class BaseDaggerComponent<T> {
+abstract class BaseDaggerComponent<in T> {
 
-    interface Factory<T> {
+    interface Factory<in T> {
 
         fun create(): BaseDaggerComponent<T>
     }

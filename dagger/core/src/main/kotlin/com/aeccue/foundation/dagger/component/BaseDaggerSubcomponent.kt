@@ -13,7 +13,7 @@ interface BaseDaggerSubcomponent<in T> {
         abstract fun create(@BindsInstance target: T): C
     }
 
-    interface FactoryMapping<T, C : BaseDaggerSubcomponent<T>, F : Factory<T, C>> {
+    interface FactoryMapping<T, C : BaseDaggerSubcomponent<T>, in F : Factory<T, C>> {
 
         @Binds
         @IntoSet
