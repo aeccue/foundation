@@ -1,4 +1,4 @@
-package com.aeccue.foundation.test
+package com.aeccue.foundation.test.ext
 
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEqualTo
