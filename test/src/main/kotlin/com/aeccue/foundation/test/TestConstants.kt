@@ -36,6 +36,8 @@ val TEST_JSON = JSONObject().apply {
     put("seven", JSONArray().apply { addAll(TEST_STRING_SET) })
 }
 
+val TEST_JSON_BASE64_ENCODED = "eyJzaXgiOnsiaGVsbG8iOiJ3b3JsZCJ9LCJmb3VyIjp0cnVlLCJvbmUiOjEsInNldmVuIjpbIkhlbGxvIiwiV29ybGQiXSwidHdvIjoiMiIsInRocmVlIjpudWxsLCJmaXZlIjo1LjV9"
+
 /**
  * A sample ByteArray of 12 elements.
  */

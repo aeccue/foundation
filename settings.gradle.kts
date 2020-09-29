@@ -5,6 +5,7 @@ if (gradle.parent == null) {
 }
 
 include(
+        "core",
         "dagger",
         "dagger:core",
         "test"
