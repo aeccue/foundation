@@ -6,7 +6,7 @@ import javax.inject.Singleton
 
 @Singleton
 class DaggerInjector
-@Inject constructor(factories: Set<@JvmSuppressWildcards BaseDaggerSubcomponent.Factory<Any, BaseDaggerSubcomponent<Any>>>) {
+@Inject constructor(factories: Set<@JvmSuppressWildcards BaseDaggerSubcomponent.Factory<Any>>) {
 
     private val factoryMappings = factories.associateBy {
         it.key

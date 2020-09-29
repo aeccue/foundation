@@ -8,5 +8,5 @@ import dagger.multibindings.Multibinds
 interface DaggerInjectorModule {
 
     @Multibinds
-    fun factories(): Set<BaseDaggerSubcomponent.Factory<Any, BaseDaggerSubcomponent<Any>>>
+    fun factories(): Set<BaseDaggerSubcomponent.Factory<Any>>
 }
