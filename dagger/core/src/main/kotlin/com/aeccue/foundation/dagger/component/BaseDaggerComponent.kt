@@ -40,7 +40,7 @@ abstract class BaseDaggerComponent<in T> {
 
     /**
      * Initializes this component with a target. The target will be automatically injected. However,
-     * if the targe is an instance of [InjectAware], preInject and postInject will be called
+     * if the target is an instance of [InjectAware], preInject and postInject will be called
      * accordingly as well. If the target is also an instance of [DaggerInjectorProvider], it will
      * be automatically registered to [DaggerInjection], so that any of its subcomponents can be
      * injected by the DaggerInjection as well.

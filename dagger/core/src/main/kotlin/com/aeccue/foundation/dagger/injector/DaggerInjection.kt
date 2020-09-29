@@ -10,22 +10,27 @@ object DaggerInjection {
     private val injectors = mutableListOf<DaggerInjector>()
 
     /**
-     * Registers the [DaggerInjector], to be used for injection.
+     * Registers the [DaggerInjector], to be used for injection. Registration will only succeed if
+     * the DaggerInjector is not already registered.
      *
      * @param [injector] The injector to register.
+     * @return True if injector has been successfully registered, false otherwise.
      */
-    fun register(injector: DaggerInjector) {
+    fun register(injector: DaggerInjector): Boolean {
+        if (injectors.contains(injector)) return false
+
         injectors.add(injector)
+        return true
     }
 
     /**
-     * Unregisters a previously registered [DaggerInjector]. If the injector was not previously
-     * registered, do nothing.
+     * Attempts to unregisters a previously registered [DaggerInjector].
      *
      * @param [injector] The injector to unregister.
+     * @return True if DaggerInjector is removed, or false if it was not previously registered.
      */
-    fun unregister(injector: DaggerInjector) {
-        injectors.remove(injector)
+    fun unregister(injector: DaggerInjector): Boolean {
+        return injectors.remove(injector)
     }
 
     /**
@@ -33,13 +38,20 @@ object DaggerInjection {
      * inject the target.
      *
      * @param [target] The target to inject.
-     * @throws [IllegalArgumentException] If no registered injectors can inject the target.
+     * @return True if the target is successfully injected, false otherwise.
      */
-    fun inject(target: Any) {
+    fun inject(target: Any): Boolean {
         for (injector in injectors) {
-            if (injector.inject(target)) return
+            if (injector.inject(target)) return true
         }
 
-        throw IllegalArgumentException("Dagger injector does not exist for target [${target::class.simpleName}]")
+        return false
+    }
+
+    /**
+     * Unregisters all injectors currently registered.
+     */
+    internal fun clearInjectors() {
+        injectors.clear()
     }
 }
