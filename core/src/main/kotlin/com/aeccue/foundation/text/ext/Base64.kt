@@ -1,6 +1,8 @@
 package com.aeccue.foundation.text.ext
 
 import com.aeccue.foundation.text.StringLength
+import org.json.simple.JSONObject
+import org.json.simple.parser.JSONParser
 import java.util.Base64.getDecoder
 import java.util.Base64.getEncoder
 
@@ -43,3 +45,24 @@ fun String.base64DecodeToByteArray(): ByteArray? =
         } catch (e: Exception) {
             null
         }
+
+/**
+ * Attempts to decode this String as a Base64 encoded String into a JSONObject.
+ *
+ * @return The decoded JSONObject or null if the source cannot be decoded.
+ */
+fun String.base64DecodeToJSONObject(): JSONObject? =
+        base64Decode()?.let {
+            try {
+                JSONParser().parse(it) as? JSONObject
+            } catch (e: Exception) {
+                null
+            }
+        }
+
+/**
+ * Base64 encodes the String representation of this JSONObject.
+ *
+ * @return The Base64 encoded JSONObject.
+ */
+fun JSONObject.base64Encode(): String = toJSONString().base64Encode()

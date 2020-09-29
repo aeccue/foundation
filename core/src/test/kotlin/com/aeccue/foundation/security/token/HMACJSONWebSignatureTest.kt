@@ -16,8 +16,8 @@ class HMACJSONWebSignatureTest {
     fun `creating an HMACJSONWebSignature should produce a token with a proper signature`(testCase: HMACJSONWebSignatureTestCase) {
         val key = HMAC.createKey(testCase.key.toByteArray())
         val token = HMACJSONWebSignature(key).apply {
-            setHeader(testCase.header)
-            setPayload(testCase.payload)
+            header = testCase.header
+            payload = testCase.payload
         }
         token.getToken() `should be equal to` testCase.expectedTokenString
     }

@@ -17,7 +17,7 @@ private const val LENGTH_TAG = 128
  */
 object AES {
 
-    private val cipher: Cipher by lazy { Cipher.getInstance(ALGORITHM_CIPHER) }
+    private val instance: Cipher by lazy { Cipher.getInstance(ALGORITHM_CIPHER) }
 
     /**
      * Creates a SecretKey for AES.
@@ -37,8 +37,8 @@ object AES {
      */
     fun encrypt(key: SecretKey, iv: ByteArray, data: ByteArray): ByteArray {
         val params = GCMParameterSpec(LENGTH_TAG, iv)
-        cipher.init(Cipher.ENCRYPT_MODE, key, params)
-        return cipher.doFinal(data)
+        instance.init(Cipher.ENCRYPT_MODE, key, params)
+        return instance.doFinal(data)
     }
 
     /**
@@ -62,13 +62,13 @@ object AES {
      * @param [key] The secret key for decrypting.
      * @param [iv] The initialization vector used to encrypt the data.
      * @param [encryptedData] The encrypted data to decrypt.
-     * @return The decrypted data.
+     * @return The decrypted data, or null if data cannot be decrypted.
      */
     fun decrypt(key: SecretKey, iv: ByteArray, encryptedData: ByteArray): ByteArray? {
         val params = GCMParameterSpec(LENGTH_TAG, iv)
-        cipher.init(Cipher.DECRYPT_MODE, key, params)
+        instance.init(Cipher.DECRYPT_MODE, key, params)
         return try {
-            cipher.doFinal(encryptedData)
+            instance.doFinal(encryptedData)
         } catch (e: Exception) {
             null
         }
@@ -81,13 +81,13 @@ object AES {
      * @param [key] The secret key for decrypting.
      * @param [encryptedData] The initialization vector and the encrypted data to decrypt.
      * @param [ivLength] The length of the initialization vector to extract. Defaults to [LENGTH_IV].
-     * @return The decrypted data.
+     * @return The decrypted data, or null if data cannot be decrypted.
      */
     fun decrypt(key: SecretKey, encryptedData: ByteArray, ivLength: Int = LENGTH_IV): ByteArray? {
         val params = GCMParameterSpec(LENGTH_TAG, encryptedData, 0, ivLength)
-        cipher.init(Cipher.DECRYPT_MODE, key, params)
+        instance.init(Cipher.DECRYPT_MODE, key, params)
         return try {
-            cipher.doFinal(encryptedData, ivLength, encryptedData.size - ivLength)
+            instance.doFinal(encryptedData, ivLength, encryptedData.size - ivLength)
         } catch (e: Exception) {
             null
         }

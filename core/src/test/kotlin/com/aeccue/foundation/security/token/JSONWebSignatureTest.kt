@@ -2,8 +2,8 @@ package com.aeccue.foundation.security.token
 
 import com.aeccue.foundation.test.*
 import org.amshove.kluent.`should be equal to`
-import org.amshove.kluent.`should throw`
-import org.amshove.kluent.invoking
+import org.amshove.kluent.`should be false`
+import org.amshove.kluent.`should be true`
 import org.json.simple.JSONObject
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,35 +13,35 @@ import java.util.stream.Stream
 class JSONWebSignatureTest {
 
     @Test
-    fun `setting an invalid token string should throw an exception`() {
+    fun `setting an invalid token string should return false`() {
         val token = JSONWebSignatureImplementation("correct signature")
         val invalidTokenString = "only two.parts"
-        invoking { token.setToken(invalidTokenString) } `should throw` IllegalArgumentException::class
+        token.setToken(invalidTokenString).`should be false`()
     }
 
     @Test
-    fun `setting a token string with incorrect signature should throw an exception`() {
+    fun `setting a token string with incorrect signature should return false`() {
         val token = JSONWebSignatureImplementation("correct signature")
         val invalidTokenString = "hello.world.incorrect signature"
-        invoking { token.setToken(invalidTokenString) } `should throw` IllegalArgumentException::class
+        token.setToken(invalidTokenString).`should be false`()
     }
 
     @ParameterizedTest
     @MethodSource(TEST_CASES)
     fun `setting a valid token should set the header and payload correctly`(testCase: JSONWebSignatureTestCase) {
         val token = JSONWebSignatureImplementation(testCase.signature)
-        token.setToken(testCase.tokenString)
+        token.setToken(testCase.tokenString).`should be true`()
 
-        token.header `should be equal to` token.header
-        token.payload `should be equal to` token.payload
+        token.header `should be equal to` testCase.header
+        token.payload `should be equal to` testCase.payload
     }
 
     @ParameterizedTest
     @MethodSource(TEST_CASES)
     fun `setting header and payload in token should result in correct token string`(testCase: JSONWebSignatureTestCase) {
         val token = JSONWebSignatureImplementation(testCase.signature)
-        token.setHeader(testCase.header)
-        token.setPayload(testCase.payload)
+        token.header = testCase.header
+        token.payload = testCase.payload
 
         token.getToken() `should be equal to` testCase.tokenString
     }

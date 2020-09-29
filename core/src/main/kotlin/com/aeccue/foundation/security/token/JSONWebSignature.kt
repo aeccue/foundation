@@ -1,5 +1,6 @@
 package com.aeccue.foundation.security.token
 
+import com.aeccue.foundation.text.ext.base64DecodeToJSONObject
 import com.aeccue.foundation.text.ext.base64Encode
 
 /**
@@ -15,15 +16,20 @@ abstract class JSONWebSignature(keyId: String?) : JSONWebToken(keyId) {
      * and payload.
      *
      * @param [token] The token string.
-     * @throws [IllegalArgumentException] If the token String is invalid, or the signature is not valid.
+     * @return True if the token String and signature are valid, false otherwise.
      */
-    override fun setToken(token: String) {
+    override fun setToken(token: String): Boolean {
         val parts = token.split(SEPARATOR)
-        if (parts.size != 3) throw IllegalArgumentException()
-        if (parts[2] != createSignature(parts[0], parts[1])) throw IllegalArgumentException()
+        if (parts.size != 3) return false
+        if (parts[2] != createSignature(parts[0], parts[1])) return false
 
-        setHeaderEncoded(parts[0])
-        setPayloadEncoded(parts[1])
+        val header = parts[0].base64DecodeToJSONObject() ?: return false
+        val payload = parts[1].base64DecodeToJSONObject() ?: return false
+
+        this.header = header
+        this.payload = payload
+
+        return true
     }
 
     /**
@@ -31,7 +37,12 @@ abstract class JSONWebSignature(keyId: String?) : JSONWebToken(keyId) {
      *
      * @return This token as a String.
      */
-    override fun getToken(): String = "$headerEncoded$SEPARATOR$payloadEncoded$SEPARATOR${createSignature()}"
+    override fun getToken(): String {
+        val encodedHeader = header.base64Encode()
+        val encodedPayload = payload.base64Encode()
+        val signature = createSignature(encodedHeader, encodedPayload)
+        return "$encodedHeader$SEPARATOR$encodedPayload$SEPARATOR$signature"
+    }
 
     /**
      * Signs the data.
@@ -44,10 +55,10 @@ abstract class JSONWebSignature(keyId: String?) : JSONWebToken(keyId) {
     /**
      * Creates signatures with a header and payload, and encodes it to Base64.
      *
-     * @param [header] The header to include in the signature. Defaults to [headerEncoded].
-     * @param [payload] The payload to include in the signature. Defaults to [payloadEncoded].
+     * @param [header] The header to include in the signature.
+     * @param [payload] The payload to include in the signature.
      * @return The signature of the header and payload.
      */
-    private fun createSignature(header: String = headerEncoded, payload: String = payloadEncoded)
+    private fun createSignature(header: String, payload: String)
             : String = sign("$header$SEPARATOR$payload").base64Encode()
 }

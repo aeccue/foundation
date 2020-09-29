@@ -8,10 +8,7 @@ import java.security.SecureRandom
  */
 object Random {
 
-    /**
-     * Strong secure random instance.
-     */
-    private val random: SecureRandom by lazy { SecureRandom.getInstanceStrong() }
+    private val instance: SecureRandom by lazy { SecureRandom.getInstanceStrong() }
 
     /**
      * Generates a ByteArray with cryptographically secure random bytes. Length must be greater than
@@ -24,7 +21,7 @@ object Random {
     fun generateByteArray(size: Int): ByteArray {
         if (size < 1) throw IllegalArgumentException()
         return ByteArray(size).apply {
-            random.nextBytes(this)
+            instance.nextBytes(this)
         }
     }
 
@@ -40,7 +37,7 @@ object Random {
         if (length < 1) throw IllegalArgumentException()
         return String(CharArray(length).apply {
             for (i in 0 until length) {
-                this[i] = String.ALPHANUMERIC[random.nextInt(String.ALPHANUMERIC.length)]
+                this[i] = String.ALPHANUMERIC[instance.nextInt(String.ALPHANUMERIC.length)]
             }
         })
     }

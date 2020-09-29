@@ -1,16 +1,17 @@
 package com.aeccue.foundation.security.token
 
 import com.aeccue.foundation.json.ext.getOptional
-import com.aeccue.foundation.text.ext.base64Decode
+import com.aeccue.foundation.text.ext.base64DecodeToJSONObject
 import com.aeccue.foundation.text.ext.base64Encode
 import org.json.simple.JSONObject
-import org.json.simple.parser.JSONParser
 
 /**
  * An URL-safe token stored as JSON and used as a means to represent claims to be transferred
  * between two parties.
  *
  * @property [keyId] An optional id of the key used to encrypt or sign this token.
+ * @property [header] JOSE header. Can only be set using the setter function.
+ * @property [payload] JSON payload holding the claims. Can only be set using the setter function.
  */
 abstract class JSONWebToken(private val keyId: String?) {
 
@@ -74,31 +75,17 @@ abstract class JSONWebToken(private val keyId: String?) {
         const val SUBJECT = "sub"
     }
 
-    /**
-     * JOSE header. Can only be set using the setter function.
-     */
     var header: JSONObject = JSONObject().apply {
         if (keyId != null) put(Header.KEY_ID, keyId)
     }
-        private set
+        set(value) {
+            field = JSONObject(value)
+        }
 
-    /**
-     * Header encoded in Base64. Can only be set using the setter function.
-     */
-    var headerEncoded: String = header.toJSONString().base64Encode()
-        private set
-
-    /**
-     * JSON payload holding the claims. Can only be set using the setter function.
-     */
     var payload: JSONObject = JSONObject()
-        private set
-
-    /**
-     * Payload encoded in Base64. Can only be set using the setter function.
-     */
-    var payloadEncoded: String = payload.toJSONString().base64Encode()
-        private set
+        set(value) {
+            field = JSONObject(value)
+        }
 
     /**
      * Gets the optional key id that was specified during the construction of this class.
@@ -106,17 +93,6 @@ abstract class JSONWebToken(private val keyId: String?) {
      * @return The key id, if it exists.
      */
     fun getKeyId(): String? = header.getOptional<String>(Header.KEY_ID)
-
-    /**
-     * Sets the header to this token, replacing the existing header. The Base64 encoded header will
-     * also be updated.
-     *
-     * @param [header] The JOSE header.
-     */
-    open fun setHeader(header: JSONObject) {
-        this.header = JSONObject(header)
-        updateHeaderEncoded()
-    }
 
     /**
      * Adds a header to the current header of this token. The Base64 encoded header will also be
@@ -127,7 +103,6 @@ abstract class JSONWebToken(private val keyId: String?) {
      */
     open fun addHeader(key: String, value: Any?) {
         header[key] = value
-        updateHeaderEncoded()
     }
 
     /**
@@ -138,38 +113,6 @@ abstract class JSONWebToken(private val keyId: String?) {
      */
     open fun removeHeader(key: String) {
         header.remove(key)
-        updateHeaderEncoded()
-    }
-
-    /**
-     * Sets the Base64 encoded header of this token, replacing the existing header. The encoded
-     * header will also be decoded and the resulting String will be parsed as a JSONObject and set
-     * to the header of this token. If the header cannot be decoded or parsed as a JSONObject, an
-     * exception is thrown.
-     *
-     * @param [headerEncoded] The Base64 encoded JOSE header.
-     * @throws [IllegalArgumentException] If the header cannot be decoded or parsed as a JSONObject.
-     */
-    open fun setHeaderEncoded(headerEncoded: String) {
-        headerEncoded.base64Decode()?.let {
-            try {
-                header = JSONParser().parse(it) as JSONObject
-                this.headerEncoded = headerEncoded
-            } catch (e: Exception) {
-                throw java.lang.IllegalArgumentException(e)
-            }
-        } ?: throw IllegalArgumentException()
-    }
-
-    /**
-     * Sets the payload to this token, replacing the existing payload. The Base64 encoded payload
-     * will also be updated.
-     *
-     * @param [payload] The payload.
-     */
-    open fun setPayload(payload: JSONObject) {
-        this.payload = JSONObject(payload)
-        updatePayloadEncoded()
     }
 
     /**
@@ -180,7 +123,6 @@ abstract class JSONWebToken(private val keyId: String?) {
      */
     open fun addClaim(key: String, value: Any?) {
         payload[key] = value
-        updatePayloadEncoded()
     }
 
     /**
@@ -190,41 +132,25 @@ abstract class JSONWebToken(private val keyId: String?) {
      */
     open fun removeClaim(key: String) {
         payload.remove(key)
-        updatePayloadEncoded()
-    }
-
-    /**
-     * Sets the Base64 encoded payload of this token, replacing the existing payload. The encoded
-     * payload will also be decoded and the resulting String will be parsed as a JSONObject and set
-     * to the payload of this token. If the payload cannot be decoded or parsed as a JSONObject, an
-     * exception is thrown.
-     *
-     * @param [payloadEncoded] The Base64 encoded payload.
-     * @throws [IllegalArgumentException] If the payload cannot be decoded or parsed as a JSONObject.
-     */
-    open fun setPayloadEncoded(payloadEncoded: String) {
-        payloadEncoded.base64Decode()?.let {
-            try {
-                payload = JSONParser().parse(it) as JSONObject
-                this.payloadEncoded = payloadEncoded
-            } catch (e: Exception) {
-                throw IllegalArgumentException(e)
-            }
-        } ?: throw IllegalArgumentException()
     }
 
     /**
      * Extracts the Base64 encoded header and payload from a token String and sets it to this token.
      *
      * @param [token] The token string.
-     * @throws [IllegalArgumentException] If the token String is invalid.
+     * @return True if the token String is valid, false otherwise.
      */
-    open fun setToken(token: String) {
+    open fun setToken(token: String): Boolean {
         val parts = token.split(SEPARATOR)
-        if (parts.size != 2) throw IllegalArgumentException()
+        if (parts.size != 2) return false
 
-        setHeaderEncoded(parts[0])
-        setPayloadEncoded(parts[1])
+        val header = parts[0].base64DecodeToJSONObject() ?: return false
+        val payload = parts[1].base64DecodeToJSONObject() ?: return false
+
+        this.header = header
+        this.payload = payload
+
+        return true
     }
 
     /**
@@ -232,19 +158,5 @@ abstract class JSONWebToken(private val keyId: String?) {
      *
      * @return This token as a String.
      */
-    open fun getToken(): String = "$headerEncoded$SEPARATOR$payloadEncoded"
-
-    /**
-     * Updates the Base64 encoded header with the current header.
-     */
-    private fun updateHeaderEncoded() {
-        headerEncoded = header.toJSONString().base64Encode()
-    }
-
-    /**
-     * Updates the Base64 encoded payload with the current payload.
-     */
-    private fun updatePayloadEncoded() {
-        payloadEncoded = payload.toJSONString().base64Encode()
-    }
+    open fun getToken(): String = "${header.base64Encode()}$SEPARATOR${payload.base64Encode()}"
 }

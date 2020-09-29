@@ -11,10 +11,7 @@ private const val ALGORITHM = "HmacSHA256"
  */
 object HMAC {
 
-    /**
-     * HMAC instance.
-     */
-    private val hmac: Mac by lazy { Mac.getInstance(ALGORITHM) }
+    private val instance: Mac by lazy { Mac.getInstance(ALGORITHM) }
 
     /**
      * Creates a SecretKey for HMAC SHA256.
@@ -32,7 +29,7 @@ object HMAC {
      * @return The hashed message.
      */
     fun hash(key: SecretKey, message: ByteArray): ByteArray {
-        hmac.init(key)
-        return hmac.doFinal(message)
+        instance.init(key)
+        return instance.doFinal(message)
     }
 }

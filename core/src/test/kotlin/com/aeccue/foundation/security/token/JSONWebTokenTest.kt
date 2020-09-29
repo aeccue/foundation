@@ -27,31 +27,8 @@ class JSONWebTokenTest {
     }
 
     @Test
-    fun `setting header should result in correct header and encoded header`() {
+    fun `adding header should result in correct header`() {
         val expectedHeader = TEST_JSON
-        val expectedHeaderEncoded = TEST_JSON_BASE64_ENCODED
-        val token = JSONWebTokenImplementation().apply {
-            setHeader(expectedHeader)
-        }
-
-        validateHeader(token, expectedHeader, expectedHeaderEncoded)
-    }
-
-    @Test
-    fun `setting encoded header should result in correct header and encoded header`() {
-        val expectedHeader = TEST_JSON
-        val expectedHeaderEncoded = TEST_JSON_BASE64_ENCODED
-        val token = JSONWebTokenImplementation().apply {
-            setHeaderEncoded(expectedHeaderEncoded)
-        }
-
-        validateHeader(token, expectedHeader, expectedHeaderEncoded)
-    }
-
-    @Test
-    fun `adding header should result in correct header and encoded header`() {
-        val expectedHeader = TEST_JSON
-        val expectedHeaderEncoded = TEST_JSON_BASE64_ENCODED
         val token = JSONWebTokenImplementation().apply {
             for (h in expectedHeader) {
                 header.containsKey(h.key).`should be false`()
@@ -60,14 +37,14 @@ class JSONWebTokenTest {
             }
         }
 
-        validateHeader(token, expectedHeader, expectedHeaderEncoded)
+        token.header `should be equal to` expectedHeader
     }
 
     @Test
-    fun `removing header should result in correct header and encoded header`() {
+    fun `removing header should result in correct header`() {
         val header = TEST_JSON
         val token = JSONWebTokenImplementation().apply {
-            setHeader(header)
+            this.header = header
             for (h in header) {
                 this.header.containsKey(h.key).`should be true`()
                 removeHeader(h.key as String)
@@ -76,36 +53,12 @@ class JSONWebTokenTest {
         }
 
         val expectedHeader = JSONObject()
-        val expectedHeaderEncoded = "e30="
-        validateHeader(token, expectedHeader, expectedHeaderEncoded)
+        token.header `should be equal to` expectedHeader
     }
 
     @Test
-    fun `setting payload should result in correct payload and encoded payload`() {
+    fun `adding claim should result in correct payload`() {
         val expectedPayload = TEST_JSON
-        val expectedPayloadEncoded = TEST_JSON_BASE64_ENCODED
-        val token = JSONWebTokenImplementation().apply {
-            setPayload(expectedPayload)
-        }
-
-        validatePayload(token, expectedPayload, expectedPayloadEncoded)
-    }
-
-    @Test
-    fun `setting encoded payload should result in correct payload and encoded payload`() {
-        val expectedPayload = TEST_JSON
-        val expectedPayloadEncoded = TEST_JSON_BASE64_ENCODED
-        val token = JSONWebTokenImplementation().apply {
-            setPayloadEncoded(expectedPayloadEncoded)
-        }
-
-        validatePayload(token, expectedPayload, expectedPayloadEncoded)
-    }
-
-    @Test
-    fun `adding claim should result in correct payload and encoded payload`() {
-        val expectedPayload = TEST_JSON
-        val expectedPayloadEncoded = TEST_JSON_BASE64_ENCODED
         val token = JSONWebTokenImplementation().apply {
             for (claim in expectedPayload) {
                 payload.containsKey(claim.key).`should be false`()
@@ -114,14 +67,14 @@ class JSONWebTokenTest {
             }
         }
 
-        validatePayload(token, expectedPayload, expectedPayloadEncoded)
+        token.payload `should be equal to` expectedPayload
     }
 
     @Test
-    fun `removing claim should result in correct payload and encoded payload`() {
+    fun `removing claim should result in correct payload`() {
         val payload = TEST_JSON
         val token = JSONWebTokenImplementation().apply {
-            setPayload(payload)
+            this.payload = payload
             for (claim in payload) {
                 this.payload.containsKey(claim.key).`should be true`()
                 removeClaim(claim.key as String)
@@ -130,8 +83,7 @@ class JSONWebTokenTest {
         }
 
         val expectedPayload = JSONObject()
-        val expectedPayloadEncoded = "e30="
-        validatePayload(token, expectedPayload, expectedPayloadEncoded)
+        token.payload `should be equal to` expectedPayload
     }
 
     @ParameterizedTest
@@ -141,9 +93,6 @@ class JSONWebTokenTest {
             setToken(testCase.tokenString)
         }
 
-        println(testCase.header)
-        println(testCase.payload)
-
         token.header `should be equal to` testCase.header
         token.payload `should be equal to` testCase.payload
     }
@@ -152,21 +101,11 @@ class JSONWebTokenTest {
     @MethodSource(TEST_CASES)
     fun `setting header and payload should create valid token string`(testCase: JSONWebTokenTestCase) {
         val token = JSONWebTokenImplementation(TEST_STRING).apply {
-            setHeader(testCase.header)
-            setPayload(testCase.payload)
+            header = testCase.header
+            payload = testCase.payload
         }
 
         token.getToken() `should be equal to` testCase.tokenString
-    }
-
-    private fun validateHeader(token: JSONWebToken, expectedHeader: JSONObject, expectedHeaderEncoded: String) {
-        token.header `should be equal to` expectedHeader
-        token.headerEncoded `should be equal to` expectedHeaderEncoded
-    }
-
-    private fun validatePayload(token: JSONWebToken, expectedPayload: JSONObject, expectedPayloadEncoded: String) {
-        token.payload `should be equal to` expectedPayload
-        token.payloadEncoded `should be equal to` expectedPayloadEncoded
     }
 
     @Suppress("unused")

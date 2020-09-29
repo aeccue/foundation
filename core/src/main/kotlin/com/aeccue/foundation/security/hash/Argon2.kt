@@ -12,10 +12,7 @@ private const val HASH_PARALLELISM = 2
  */
 object Argon2 {
 
-    /**
-     * Argon2id instance.
-     */
-    private val argon: Argon2 by lazy { Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id) }
+    private val instance: Argon2 by lazy { Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id) }
 
     /**
      * Hashes a password with Argon2id.
@@ -35,7 +32,7 @@ object Argon2 {
              iterations: Int = HASH_ITERATIONS,
              memory: Int = HASH_MEMORY,
              parallelism: Int = HASH_PARALLELISM): String =
-            argon.hash(iterations, memory, parallelism, password.toCharArray())
+            instance.hash(iterations, memory, parallelism, password.toCharArray())
 
     /**
      * Verifies a password against a hash.
@@ -46,6 +43,6 @@ object Argon2 {
      */
     fun verify(hash: String?, password: String?): Boolean {
         if (hash == null || password == null) return false
-        return argon.verify(hash, password.toCharArray())
+        return instance.verify(hash, password.toCharArray())
     }
 }
