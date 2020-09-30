@@ -13,18 +13,18 @@ import com.aeccue.foundation.api.resource.Resource
 interface ResourceConverter<R : Resource<*>, S> : Tagged {
 
     /**
-     * Converts a resource to its source.
-     *
-     * @param [resource] The resource to convert.
-     * @return The source of the resource.
-     */
-    fun to(resource: R): S
-
-    /**
      * Creates a resource from a source.
      *
      * @param [source] The source of the resource.
      * @return The resource created from the source.
      */
-    fun from(source: S): R
+    fun to(source: S): R
+
+    /**
+     * Converts a resource to its source.
+     *
+     * @param [resource] The resource to convert.
+     * @return The source of the resource.
+     */
+    fun from(resource: R): S
 }

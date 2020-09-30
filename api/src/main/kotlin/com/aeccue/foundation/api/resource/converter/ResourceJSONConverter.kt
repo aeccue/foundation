@@ -16,7 +16,7 @@ abstract class ResourceJSONConverter<R : Resource<*>> : ResourceConverter<R, JSO
      * @param [resource] The resource to convert.
      * @return The JSONObject created with the resource.
      */
-    override fun to(resource: R) = JSONObject().apply {
+    override fun from(resource: R) = JSONObject().apply {
         put(Resource.Properties.KEY, resource.key)
         put(Resource.Properties.CREATED_TIME, resource.createdTime)
         put(Resource.Properties.LAST_MODIFIED, resource.lastModified)
