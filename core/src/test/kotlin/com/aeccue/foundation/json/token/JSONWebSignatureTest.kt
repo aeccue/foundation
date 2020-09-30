@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security.token
+package com.aeccue.foundation.json.token
 
 import com.aeccue.foundation.test.*
 import org.amshove.kluent.`should be equal to`

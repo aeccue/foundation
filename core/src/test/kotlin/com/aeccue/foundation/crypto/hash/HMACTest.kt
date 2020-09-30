@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security.hash
+package com.aeccue.foundation.crypto.hash
 
 import com.aeccue.foundation.test.TEST_BYTE_ARRAY_16
 import com.aeccue.foundation.test.TEST_STRING

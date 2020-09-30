@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security.hash
+package com.aeccue.foundation.crypto.hash
 
 import javax.crypto.Mac
 import javax.crypto.SecretKey

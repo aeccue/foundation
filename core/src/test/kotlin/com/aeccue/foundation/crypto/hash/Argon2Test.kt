@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security.hash
+package com.aeccue.foundation.crypto.hash
 
 import com.aeccue.foundation.test.IOTestCase
 import com.aeccue.foundation.test.TEST_CASES

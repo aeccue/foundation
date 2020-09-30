@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security.hash
+package com.aeccue.foundation.crypto.hash
 
 import de.mkammerer.argon2.Argon2
 import de.mkammerer.argon2.Argon2Factory

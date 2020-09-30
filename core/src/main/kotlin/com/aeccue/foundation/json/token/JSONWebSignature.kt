@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security.token
+package com.aeccue.foundation.json.token
 
 import com.aeccue.foundation.json.ext.getOptional
 import com.aeccue.foundation.text.ext.base64DecodeToJSONObject

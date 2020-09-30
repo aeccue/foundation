@@ -1,6 +1,6 @@
-package com.aeccue.foundation.security.token
+package com.aeccue.foundation.json.token
 
-import com.aeccue.foundation.security.hash.HMAC
+import com.aeccue.foundation.crypto.hash.HMAC
 import com.aeccue.foundation.test.*
 import com.aeccue.foundation.text.ext.base64Encode
 import org.amshove.kluent.`should be equal to`

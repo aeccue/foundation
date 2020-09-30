@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security.encryption
+package com.aeccue.foundation.crypto.encrypt
 
 import com.aeccue.foundation.test.*
 import com.aeccue.foundation.text.ext.base64DecodeToByteArray

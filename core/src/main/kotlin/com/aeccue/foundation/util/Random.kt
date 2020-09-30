@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security
+package com.aeccue.foundation.util
 
 import com.aeccue.foundation.text.ext.ALPHANUMERIC
 import java.security.SecureRandom

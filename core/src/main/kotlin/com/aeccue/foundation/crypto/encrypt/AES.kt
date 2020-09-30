@@ -1,6 +1,6 @@
-package com.aeccue.foundation.security.encryption
+package com.aeccue.foundation.crypto.encrypt
 
-import com.aeccue.foundation.security.Random
+import com.aeccue.foundation.util.Random
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec

@@ -1,4 +1,4 @@
-package com.aeccue.foundation.security
+package com.aeccue.foundation.util
 
 import com.aeccue.foundation.test.TEST_CASES
 import com.aeccue.foundation.test.ext.`contents should not be equal to`
