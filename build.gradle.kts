@@ -16,4 +16,12 @@ apply(plugin = com.aeccue.gradle.Plugins.Aeccue.PROJECT_KOTLIN)
 subprojects {
     group = "${rootProject.group}.foundation"
     version = rootProject.version
+
+    if (name != "test") {
+        afterEvaluate {
+            dependencies {
+                "testImplementation"(project(":test"))
+            }
+        }
+    }
 }

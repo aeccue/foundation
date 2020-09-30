@@ -3,7 +3,6 @@ package com.aeccue.foundation.security.token
 import com.aeccue.foundation.test.TEST_CASES
 import com.aeccue.foundation.test.TEST_JSON
 import com.aeccue.foundation.test.TEST_JSON_BASE64_ENCODED
-import com.aeccue.foundation.test.TEST_STRING
 import com.aeccue.foundation.test.ext.toClock
 import org.amshove.kluent.`should be equal to`
 import org.amshove.kluent.`should be false`
@@ -18,13 +17,6 @@ import java.util.stream.Stream
 class JSONWebTokenTest {
 
     private val clock = 1000000L.toClock()
-
-    @Test
-    fun `setting key id should produce correct key id in header`() {
-        val token = JSONWebTokenImplementation(TEST_STRING)
-        token.header[JSONWebToken.Headers.KEY_ID] `should be equal to` TEST_STRING
-        token.getKeyId() `should be equal to` TEST_STRING
-    }
 
     @Test
     fun `adding header should result in correct header`() {
@@ -89,7 +81,7 @@ class JSONWebTokenTest {
     @ParameterizedTest
     @MethodSource(TEST_CASES)
     fun `setting token string should result in correct header and payload`(testCase: JSONWebTokenTestCase) {
-        val token = JSONWebTokenImplementation(TEST_STRING).apply {
+        val token = JSONWebTokenImplementation().apply {
             setToken(testCase.tokenString)
         }
 
@@ -100,7 +92,7 @@ class JSONWebTokenTest {
     @ParameterizedTest
     @MethodSource(TEST_CASES)
     fun `setting header and payload should create valid token string`(testCase: JSONWebTokenTestCase) {
-        val token = JSONWebTokenImplementation(TEST_STRING).apply {
+        val token = JSONWebTokenImplementation().apply {
             header = testCase.header
             payload = testCase.payload
         }
@@ -154,4 +146,4 @@ class JSONWebTokenTest {
 
 data class JSONWebTokenTestCase(val header: JSONObject, val payload: JSONObject, val tokenString: String)
 
-private class JSONWebTokenImplementation(keyId: String? = null) : JSONWebToken(keyId)
+private class JSONWebTokenImplementation : JSONWebToken()

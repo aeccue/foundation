@@ -13,6 +13,13 @@ import java.util.stream.Stream
 class JSONWebSignatureTest {
 
     @Test
+    fun `setting key id should produce correct key id in header`() {
+        val token = JSONWebSignatureImplementation("", TEST_STRING)
+        token.header[JSONWebToken.Headers.KEY_ID] `should be equal to` TEST_STRING
+        token.getKeyId() `should be equal to` TEST_STRING
+    }
+
+    @Test
     fun `setting an invalid token string should return false`() {
         val token = JSONWebSignatureImplementation("correct signature")
         val invalidTokenString = "only two.parts"
@@ -74,7 +81,7 @@ data class JSONWebSignatureTestCase(val header: JSONObject,
                                     val signature: String,
                                     val tokenString: String)
 
-private class JSONWebSignatureImplementation(private val signature: String) : JSONWebSignature(null) {
+private class JSONWebSignatureImplementation(private val signature: String, key: String? = null) : JSONWebSignature(key) {
 
     override fun sign(data: String): ByteArray = signature.toByteArray()
 }
