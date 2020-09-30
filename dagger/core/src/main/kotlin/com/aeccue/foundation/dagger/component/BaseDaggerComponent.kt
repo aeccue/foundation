@@ -9,7 +9,7 @@ import com.aeccue.foundation.dagger.injector.InjectAware
  * [init] method must be invoked to initialize this process. Subclasses must also have the Dagger
  * Component annotation.
  *
- * @param [T] The class of the target to inject with this component.
+ * @param [T] The type of target to inject with this component.
  */
 abstract class BaseDaggerComponent<in T> {
 
@@ -18,7 +18,7 @@ abstract class BaseDaggerComponent<in T> {
      * method has already been provided. Subclasses must also have the Dagger Component.Factory
      * annotation.
      *
-     * @param [T] The class of the injection target of the component to create.
+     * @param [T] The type of the injection target of the component to create.
      */
     interface Factory<in T> {
 

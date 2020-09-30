@@ -1,19 +1,20 @@
 package com.aeccue.foundation
 
 /**
- * An interface that dictates that the implementing class is capable of handling an object of class
- * [T] using an object of class [H].
+ * An interface that dictates that the implementing class is capable of handling an object of type
+ * [T] using an object of type [H].
  *
- * @param [T] The class to handle.
- * @param [H] The class to use for handling.
+ * @param [T] The type of class to handle.
+ * @param [H] The type of class to use for handling.
  */
-interface Handler<T, H> {
+interface Handler<in T, in H> {
 
     /**
      * Handles a target.
      *
      * @param [target] The target to handle.
      * @param [with] What to use for handling.
+     * @return True if target was handled, false otherwise.
      */
-    fun handle(target: T, with: H)
+    fun handle(target: T, with: H): Boolean
 }

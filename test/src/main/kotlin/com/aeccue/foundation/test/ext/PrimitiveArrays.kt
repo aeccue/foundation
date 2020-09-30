@@ -15,6 +15,9 @@ infix fun BooleanArray?.contentsShouldBeEqualTo(expected: BooleanArray?): Array<
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun BooleanArray?.`contents should be equal to`(expected: BooleanArray?) =
@@ -32,6 +35,9 @@ infix fun BooleanArray?.contentsShouldNotBeEqualTo(expected: BooleanArray?): Arr
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun BooleanArray?.`contents should not be equal to`(expected: BooleanArray?) =
@@ -49,6 +55,9 @@ infix fun ByteArray?.contentsShouldBeEqualTo(expected: ByteArray?): Array<Byte>?
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun ByteArray?.`contents should be equal to`(expected: ByteArray?) =
@@ -66,6 +75,9 @@ infix fun ByteArray?.contentsShouldNotBeEqualTo(expected: ByteArray?): Array<Byt
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun ByteArray?.`contents should not be equal to`(expected: ByteArray?) =
@@ -83,6 +95,9 @@ infix fun CharArray?.contentsShouldBeEqualTo(expected: CharArray?): Array<Char>?
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun CharArray?.`contents should be equal to`(expected: CharArray?) =
@@ -100,6 +115,9 @@ infix fun CharArray?.contentsShouldNotBeEqualTo(expected: CharArray?): Array<Cha
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun CharArray?.`contents should not be equal to`(expected: CharArray?) =
@@ -117,6 +135,9 @@ infix fun DoubleArray?.contentsShouldBeEqualTo(expected: DoubleArray?): Array<Do
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun DoubleArray?.`contents should be equal to`(expected: DoubleArray?) =
@@ -134,6 +155,9 @@ infix fun DoubleArray?.contentsShouldNotBeEqualTo(expected: DoubleArray?): Array
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun DoubleArray?.`contents should not be equal to`(expected: DoubleArray?) =
@@ -151,6 +175,9 @@ infix fun FloatArray?.contentsShouldBeEqualTo(expected: FloatArray?): Array<Floa
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun FloatArray?.`contents should be equal to`(expected: FloatArray?) =
@@ -168,6 +195,9 @@ infix fun FloatArray?.contentsShouldNotBeEqualTo(expected: FloatArray?): Array<F
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun FloatArray?.`contents should not be equal to`(expected: FloatArray?) =
@@ -185,6 +215,9 @@ infix fun IntArray?.contentsShouldBeEqualTo(expected: IntArray?): Array<Int>? =
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun IntArray?.`contents should be equal to`(expected: IntArray?) =
@@ -202,6 +235,9 @@ infix fun IntArray?.contentsShouldNotBeEqualTo(expected: IntArray?): Array<Int>?
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun IntArray?.`contents should not be equal to`(expected: IntArray?) =
@@ -219,6 +255,9 @@ infix fun LongArray?.contentsShouldBeEqualTo(expected: LongArray?): Array<Long>?
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun LongArray?.`contents should be equal to`(expected: LongArray?) =
@@ -236,6 +275,9 @@ infix fun LongArray?.contentsShouldNotBeEqualTo(expected: LongArray?): Array<Lon
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun LongArray?.`contents should not be equal to`(expected: LongArray?) =
@@ -253,6 +295,9 @@ infix fun ShortArray?.contentsShouldBeEqualTo(expected: ShortArray?): Array<Shor
 
 /**
  * Same as [contentsShouldBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun ShortArray?.`contents should be equal to`(expected: ShortArray?) =
@@ -270,6 +315,9 @@ infix fun ShortArray?.contentsShouldNotBeEqualTo(expected: ShortArray?): Array<S
 
 /**
  * Same as [contentsShouldNotBeEqualTo], but with spaces in the function name to be more expressive.
+ *
+ * @param [expected] The array to compare.
+ * @return This array.
  */
 @Suppress("FunctionName")
 infix fun ShortArray?.`contents should not be equal to`(expected: ShortArray?) =

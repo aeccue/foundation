@@ -13,7 +13,7 @@ import dagger.multibindings.IntoSet
  * been registered to the DaggerInjection. Subclasses must also have the Dagger Subcomponent
  * annotation.
  *
- * @param [T] The class of the target to inject with this subcomponent.
+ * @param [T] The type of target to inject with this subcomponent.
  */
 interface BaseDaggerSubcomponent<in T> {
 
@@ -22,11 +22,13 @@ interface BaseDaggerSubcomponent<in T> {
      * [FactoryMapping]. The [create] method has already been provided, and the [key] must be
      * provided for the FactoryMapping.
      *
-     * @param [T] The class of the injection target of the subcomponent to create.
-     * @property [key] The key for the FactoryMapping. Must be implemented.
+     * @param [T] The type of the injection target of the subcomponent to create.
      */
     abstract class Factory<T> {
 
+        /**
+         * The key for the FactoryMapping. Must be implemented.
+         */
         abstract val key: Class<T>
 
         /**
@@ -44,8 +46,8 @@ interface BaseDaggerSubcomponent<in T> {
      * This class provides a mapping of a [Factory] to its key to the [DaggerInjector], which can
      * then be used to automatically inject subcomponents through the [DaggerInjection].
      *
-     * @param [T] The class of the injection target of the subcomponent created by the factory.
-     * @param [F] The factory to create subcomponents.
+     * @param [T] The type of the injection target of the subcomponent created by the factory.
+     * @param [F] The type of factory to create subcomponents.
      */
     interface FactoryMapping<T, in F : Factory<T>> {
 

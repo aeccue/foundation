@@ -1,6 +1,5 @@
 package com.aeccue.foundation.security.token
 
-import com.aeccue.foundation.json.ext.getOptional
 import com.aeccue.foundation.text.ext.base64DecodeToJSONObject
 import com.aeccue.foundation.text.ext.base64Encode
 import org.json.simple.JSONObject
@@ -8,12 +7,8 @@ import org.json.simple.JSONObject
 /**
  * An URL-safe token stored as JSON and used as a means to represent claims to be transferred
  * between two parties.
- *
- * @property [keyId] An optional id of the key used to encrypt or sign this token.
- * @property [header] JOSE header. Can only be set using the setter function.
- * @property [payload] JSON payload holding the claims. Can only be set using the setter function.
  */
-abstract class JSONWebToken(private val keyId: String?) {
+abstract class JSONWebToken {
 
     companion object {
 
@@ -47,7 +42,7 @@ abstract class JSONWebToken(private val keyId: String?) {
     /**
      * Header parameters.
      */
-    object Header {
+    object Headers {
 
         const val ALGORITHM = "alg"
         const val CONTENT_TYPE = "cty"
@@ -65,7 +60,7 @@ abstract class JSONWebToken(private val keyId: String?) {
     /**
      * Payload claims.
      */
-    object Claim {
+    object Claims {
         const val AUDIENCE = "aud"
         const val EXPIRATION = "exp"
         const val ISSUED_AT = "iat"
@@ -75,24 +70,21 @@ abstract class JSONWebToken(private val keyId: String?) {
         const val SUBJECT = "sub"
     }
 
-    var header: JSONObject = JSONObject().apply {
-        if (keyId != null) put(Header.KEY_ID, keyId)
-    }
-        set(value) {
-            field = JSONObject(value)
-        }
-
-    var payload: JSONObject = JSONObject()
+    /**
+     * JOSE header. Can only be set using the setter function.
+     */
+    var header: JSONObject = JSONObject()
         set(value) {
             field = JSONObject(value)
         }
 
     /**
-     * Gets the optional key id that was specified during the construction of this class.
-     *
-     * @return The key id, if it exists.
+     * JSON payload holding the claims. Can only be set using the setter function.
      */
-    fun getKeyId(): String? = header.getOptional<String>(Header.KEY_ID)
+    var payload: JSONObject = JSONObject()
+        set(value) {
+            field = JSONObject(value)
+        }
 
     /**
      * Adds a header to the current header of this token. The Base64 encoded header will also be
