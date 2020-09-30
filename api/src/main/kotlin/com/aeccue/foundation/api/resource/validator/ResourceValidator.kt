@@ -4,7 +4,7 @@ import com.aeccue.foundation.analytics.Tagged
 import com.aeccue.foundation.api.resource.Resource
 
 /**
- * A validator to validate the information in a [Resource].
+ * A validator to validate the information in a [Resource], before performing a request on it.
  *
  * @param [R] The type of resource to validate.
  */
