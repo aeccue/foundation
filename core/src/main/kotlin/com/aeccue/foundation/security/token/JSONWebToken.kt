@@ -42,7 +42,7 @@ abstract class JSONWebToken {
     /**
      * Header parameters.
      */
-    object Header {
+    object Headers {
 
         const val ALGORITHM = "alg"
         const val CONTENT_TYPE = "cty"
@@ -60,7 +60,7 @@ abstract class JSONWebToken {
     /**
      * Payload claims.
      */
-    object Claim {
+    object Claims {
         const val AUDIENCE = "aud"
         const val EXPIRATION = "exp"
         const val ISSUED_AT = "iat"

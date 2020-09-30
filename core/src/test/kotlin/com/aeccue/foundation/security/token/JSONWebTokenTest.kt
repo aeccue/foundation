@@ -22,7 +22,7 @@ class JSONWebTokenTest {
     @Test
     fun `setting key id should produce correct key id in header`() {
         val token = JSONWebTokenImplementation(TEST_STRING)
-        token.header[JSONWebToken.Header.KEY_ID] `should be equal to` TEST_STRING
+        token.header[JSONWebToken.Headers.KEY_ID] `should be equal to` TEST_STRING
         token.getKeyId() `should be equal to` TEST_STRING
     }
 
@@ -112,25 +112,25 @@ class JSONWebTokenTest {
     private fun testCases() = Stream.of(
             JSONWebTokenTestCase(
                     JSONObject().apply {
-                        put(JSONWebToken.Header.ALGORITHM, "algorithm")
-                        put(JSONWebToken.Header.CONTENT_TYPE, "content type")
-                        put(JSONWebToken.Header.CRITICAL, JSONArray().apply { add("kid") })
-                        put(JSONWebToken.Header.JWK_SET_URL, "url")
-                        put(JSONWebToken.Header.JSON_WEB_KEY, "web key")
-                        put(JSONWebToken.Header.TYPE, "type")
-                        put(JSONWebToken.Header.X509_URL, "url")
-                        put(JSONWebToken.Header.X509_CERT_CHAIN, "chain")
-                        put(JSONWebToken.Header.X509_CERT_SHA1_THUMBPRINT, "SHA1")
-                        put(JSONWebToken.Header.X509_CERT_SHA256_THUMBPRINT, "SHA256")
+                        put(JSONWebToken.Headers.ALGORITHM, "algorithm")
+                        put(JSONWebToken.Headers.CONTENT_TYPE, "content type")
+                        put(JSONWebToken.Headers.CRITICAL, JSONArray().apply { add("kid") })
+                        put(JSONWebToken.Headers.JWK_SET_URL, "url")
+                        put(JSONWebToken.Headers.JSON_WEB_KEY, "web key")
+                        put(JSONWebToken.Headers.TYPE, "type")
+                        put(JSONWebToken.Headers.X509_URL, "url")
+                        put(JSONWebToken.Headers.X509_CERT_CHAIN, "chain")
+                        put(JSONWebToken.Headers.X509_CERT_SHA1_THUMBPRINT, "SHA1")
+                        put(JSONWebToken.Headers.X509_CERT_SHA256_THUMBPRINT, "SHA256")
                     },
                     JSONObject().apply {
-                        put(JSONWebToken.Claim.AUDIENCE, "test")
-                        put(JSONWebToken.Claim.EXPIRATION, clock.millis())
-                        put(JSONWebToken.Claim.ISSUED_AT, clock.millis())
-                        put(JSONWebToken.Claim.ISSUER, "me")
-                        put(JSONWebToken.Claim.JWT_ID, "test key id")
-                        put(JSONWebToken.Claim.NOT_BEFORE, clock.millis())
-                        put(JSONWebToken.Claim.SUBJECT, "test")
+                        put(JSONWebToken.Claims.AUDIENCE, "test")
+                        put(JSONWebToken.Claims.EXPIRATION, clock.millis())
+                        put(JSONWebToken.Claims.ISSUED_AT, clock.millis())
+                        put(JSONWebToken.Claims.ISSUER, "me")
+                        put(JSONWebToken.Claims.JWT_ID, "test key id")
+                        put(JSONWebToken.Claims.NOT_BEFORE, clock.millis())
+                        put(JSONWebToken.Claims.SUBJECT, "test")
                     },
                     "eyJ4NXQjUzI1NiI6IlNIQTI1NiIsImNyaXQiOlsia2lkIl0sImprdSI6InVybCIsIng1dCI6IlNIQTEiLCJ4NWMiOiJjaGFpbiIsImN0eSI6ImNvbnRlbnQgdHlwZSIsIng1dSI6InVybCIsInR5cCI6InR5cGUiLCJhbGciOiJhbGdvcml0aG0iLCJqd2siOiJ3ZWIga2V5In0=.eyJhdWQiOiJ0ZXN0Iiwic3ViIjoidGVzdCIsIm5iZiI6MTAwMDAwMCwiaXNzIjoibWUiLCJleHAiOjEwMDAwMDAsImlhdCI6MTAwMDAwMCwianRpIjoidGVzdCBrZXkgaWQifQ=="
             ),

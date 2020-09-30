@@ -13,7 +13,7 @@ abstract class JSONWebSignature(private val keyId: String?) : JSONWebToken() {
 
     init {
         if (keyId != null) {
-            header[Header.KEY_ID] = keyId
+            header[Headers.KEY_ID] = keyId
         }
     }
 
@@ -56,7 +56,7 @@ abstract class JSONWebSignature(private val keyId: String?) : JSONWebToken() {
      *
      * @return The key id, if it exists.
      */
-    fun getKeyId(): String? = header.getOptional(Header.KEY_ID)
+    fun getKeyId(): String? = header.getOptional(Headers.KEY_ID)
 
     /**
      * Signs the data.
