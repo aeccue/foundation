@@ -7,7 +7,7 @@ package com.aeccue.foundation
  * @param [T] The class to handle.
  * @param [H] The class to use for handling.
  */
-interface Handler<T, H> {
+interface Handler<in T, in H> {
 
     /**
      * Handles a target.

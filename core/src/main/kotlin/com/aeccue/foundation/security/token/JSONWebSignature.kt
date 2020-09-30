@@ -1,5 +1,6 @@
 package com.aeccue.foundation.security.token
 
+import com.aeccue.foundation.json.ext.getOptional
 import com.aeccue.foundation.text.ext.base64DecodeToJSONObject
 import com.aeccue.foundation.text.ext.base64Encode
 
@@ -8,7 +9,13 @@ import com.aeccue.foundation.text.ext.base64Encode
  *
  * @param [keyId] An optional id of the key used to sign this token.
  */
-abstract class JSONWebSignature(keyId: String?) : JSONWebToken(keyId) {
+abstract class JSONWebSignature(private val keyId: String?) : JSONWebToken() {
+
+    init {
+        if (keyId != null) {
+            header[Header.KEY_ID] = keyId
+        }
+    }
 
     /**
      * Extracts the Base64 encoded header and payload from a token String and sets it to this token.
@@ -43,6 +50,13 @@ abstract class JSONWebSignature(keyId: String?) : JSONWebToken(keyId) {
         val signature = createSignature(encodedHeader, encodedPayload)
         return "$encodedHeader$SEPARATOR$encodedPayload$SEPARATOR$signature"
     }
+
+    /**
+     * Gets the optional key id that was specified during the construction of this class.
+     *
+     * @return The key id, if it exists.
+     */
+    fun getKeyId(): String? = header.getOptional(Header.KEY_ID)
 
     /**
      * Signs the data.

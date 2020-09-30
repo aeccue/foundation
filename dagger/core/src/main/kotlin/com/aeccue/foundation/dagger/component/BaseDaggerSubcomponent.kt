@@ -23,10 +23,12 @@ interface BaseDaggerSubcomponent<in T> {
      * provided for the FactoryMapping.
      *
      * @param [T] The class of the injection target of the subcomponent to create.
-     * @property [key] The key for the FactoryMapping. Must be implemented.
      */
     abstract class Factory<T> {
 
+        /**
+         * The key for the FactoryMapping. Must be implemented.
+         */
         abstract val key: Class<T>
 
         /**

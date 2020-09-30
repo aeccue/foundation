@@ -1,7 +1,7 @@
 package com.aeccue.foundation.response.handler
 
 import com.aeccue.foundation.Handler
-import com.aeccue.foundation.response.error.InternalError
+import com.aeccue.foundation.response.error.internal.InternalError
 
 /**
  * A [Handler] that handles an [InternalError].
