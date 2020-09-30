@@ -5,6 +5,7 @@ if (gradle.parent == null) {
 }
 
 include(
+        "api",
         "core",
         "dagger",
         "dagger:core",
